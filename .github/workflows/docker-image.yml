@@ -1,14 +1,9 @@
 name: Docker Image CI
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
 env:
-  GH_USER: ${{secrets.GH_USER}}
+  GH_USER: lebronnecf
   GH_KEY: ${{secrets.GH_KEY}}
+  TAG: $(date +%s)
 
 jobs:
 
@@ -21,8 +16,8 @@ jobs:
     - name: Login into ghcr
       run: echo ${{env.GH_KEY}} | docker login ghcr.io -u ${{env.GH_USER}} --password-stdin
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag sample-app:$(date +%s) --tag ghcr.io/${{env.GH_USER}}/sample-app:$(date +%s)
+      run: docker build . --file Dockerfile --tag ghcr.io/${{env.GH_USER}}/sample-app:${{TAG}}
     - name: Push in GH registry
-      run: docker push ghcr.io/${{env.GH_USER}}/sample-app:$(date +%s)
+      run: docker push ghcr.io/${{env.GH_USER}}/sample-app:${{TAG}}
     
   
