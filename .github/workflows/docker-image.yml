@@ -1,0 +1,28 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  GH_USER: ${{secrets.GH_USER}}
+  GH_KEY: ${{secrets.GH_KEY}}
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login into ghcr
+      run: docker login ghcr.io -u ${{env.GH_USER}} -p ${{env.GH_KEY}}
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag sample-app:$(date +%s) --tag ghcr.io/${{env.GH_USER}}/sample-app:$(date +%s)
+    - name: Push in GH registry
+      run: docker push ghcr.io/${{env.GH_USER}}/sample-app:$(date +%s)
+    
+  
