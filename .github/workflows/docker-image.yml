@@ -6,7 +6,7 @@ on:
 env:
   GH_USER: lebronnecf
   GH_KEY: ${{secrets.GH_KEY}}
-  TAG: $(date +%s)
+  IMG_TAG: $(date +%s)
 
 jobs:
 
