@@ -11,7 +11,7 @@ app.get("/bonjour", (req, res) => {
 });
 
 app.get("/info", (req, res) => {
-  res.send("Je suis juste une application de démonstration.");
+  res.send("Je suis juste une application de démonstration qui est super.");
 });
 
 app.listen(port, () => {
